@@ -1,0 +1,27 @@
+--Create Video Game Database
+
+CREATE TABLE video_games(id INTEGER PRIMARY KEY, name TEXT, aisle INTEGER, rating INTEGER, quantity INTEGER);
+
+INSERT INTO video_games VALUES(1,"Super Mario Odyssey", 4, 8, 10);
+INSERT INTO video_games VALUES(2,"Sonic Frontiers", 1, 8, 20);
+INSERT INTO video_games VALUES(3,"Mario Kart 8 Deluxe", 4, 7, 15);
+INSERT INTO video_games VALUES(4,"Metroid Dread", 3, 8, 25);
+INSERT INTO video_games VALUES(5,"Bioshock", 6, 8, 5);
+INSERT INTO video_games VALUES(6,"Super Mario 3D All Stars", 4, 7, 1);
+INSERT INTO video_games VALUES(7,"Pokemon Scarlet and Violet", 2, 7, 20);
+INSERT INTO video_games VALUES(8, "Final Fantasy 7", 5, 9, 5);
+INSERT INTO video_games VALUES(9,"Kingdom Hearts", 5, 8, 4);
+INSERT INTO video_games VALUES(10,"Sonic Adventure 2", 1, 8, 1);
+INSERT INTO video_games VALUES(11,"Super Mario Galaxy", 4, 8, 3);
+INSERT INTO video_games VALUES(12,"Resident Evil 4", 7, 8, 10);
+INSERT INTO video_games VALUES(13,"Metal Gear Solid", 7, 8, 5);
+INSERT INTO video_games VALUES(14,"Metroid Prime", 3, 8, 1);
+INSERT INTO video_games VALUES(15,"Bioshock Infinite", 6, 8, 5);
+
+--Show the ailes' SUM grouped my the same aisles
+
+SELECT aisle, SUM(quantity) FROM video_games GROUP BY aisle;
+
+--Show rating of video games ordered by ratings
+
+SELECT * FROM video_games ORDER BY rating;
