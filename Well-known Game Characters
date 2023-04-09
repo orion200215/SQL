@@ -1,0 +1,38 @@
+---This creates a table for the following characters and their age.
+CREATE TABLE fiction_characters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age  INTEGER);
+
+INSERT into fiction_characters (name, age) VALUES ("Mario", 25);
+INSERT into fiction_characters (name, age) VALUES ("Luigi", 24);
+INSERT into fiction_characters (name, age) VALUES ("Sonic", 15);
+INSERT into fiction_characters (name, age) VALUES ("Tails", 8);
+
+---This table gives an id to a character and a title where they appear in.
+CREATE TABLE appearance(id INTEGER PRIMARY KEY AUTOINCREMENT, character_id INTEGER, title TEXT);
+INSERT into appearance (character_id , title) VALUES(1, "Super Mario Bros");
+INSERT into appearance (character_id , title) VALUES(1, "Super Mario 64");
+INSERT into appearance (character_id , title) VALUES(1, "Super Mario Galazy");
+INSERT into appearance (character_id , title) VALUES(2, "Mario is Missing");
+INSERT into appearance (character_id , title) VALUES(2,  "Luigi's Mansion");
+INSERT into appearance (character_id , title) VALUES(3, "Sonic The Hedgehog");
+INSERT into appearance (character_id , title) VALUES(3, "Sonic Adventure");
+INSERT into appearance (character_id , title) VALUES(3, "Sonic Colors");
+INSERT into appearance (character_id , title) VALUES(4, "Sonic Adventure 2");
+INSERT into appearance (character_id , title) VALUES(4, "Sonic Mania");
+
+---This table gives 2 ids to show how they are partnered with/
+CREATE TABLE partners(id INTEGER PRIMARY KEY AUTOINCREMENT, chara1_id INTEGER, chara2_id INTEGER);
+
+INSERT into partners (chara1_id, chara2_id) VALUES (1,2);
+INSERT into partners (chara1_id, chara2_id) VALUES (3,4);
+
+---This is a JOIN that selects the names of the characters and their appearances and links them together with their ids.
+SELECT fiction_characters.name, appearance.title FROM fiction_characters
+JOIN appearance
+ON fiction_characters.id = appearance.character_id;
+
+---This is a SELF-JOIN whichn names fiction_characters as a and b to avoid issues. It allows it to join itself and match the ids to show who they're partnered with.
+SELECT a.name, b.name FROM partners
+JOIN fiction_characters a
+ON a.id = partners.chara1_id
+JOIN fiction_characters b
+ON b.id = partners.chara2_id;
