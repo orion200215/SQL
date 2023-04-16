@@ -1,35 +1,43 @@
 --In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
 
-
+-- This counts the amount of orders in January and limits the ID to 6 and to not show the order if it's ORDER ID.
 --1. How many orders were placed in January?
 SELECT COUNT(orderID) FROM BIT_DB.JanSales WHERE length(orderID) = 6
 AND orderID <> 'Order ID'
 
+-- Counts the orders from January that were iPhones.
 --2. How many of those orders were for an iPhone?
 SELECT COUNT(orderID) FROM BIT_DB.JanSales WHERE Product = 'iPhone'
 AND length(orderID) = 6 AND orderID <> 'Order ID'
 
+-- Selects the account numbers once from customers without duplicates and joins their order IDs with the sales from Febuary.
 -- 3. Select the customer account numbers for all the orders that were placed in February.
 SELECT distinct acctnum FROM BIT_DB.customers cust
 INNER JOIN BIT_DB.FebSales FEB
 ON cust.order_id = FEB.orderID
 WHERE length(orderID) = 6 AND orderID<> 'ORDER ID'
 
+-- Selects both the producs and price without duplicates from January to fin the cheapest item and what it's price was.
 -- 4. Which product was the cheapest one sold in January, and what was the price?
 SELECT distinct Product, price FROM BIT_DB.JanSales
 WHERE price IN(SELECT MIN(price) FROM BIT_DB.JanSales)
 
+-- Calculates the sum of the amount of items and mutiplies it by the prices to get the revenue and get the products from January Sales and group them by product.
 --5. What is the total revenue for each product sold in January? 
 --(Revenue can be calculated using the number of products sold and the price of the products).
 SELECT SUM(quantity)*price as Revenue, product FROM BIT_DB.JanSales
 GROUP BY product
 
+-- Calculates the Sum of items, mutiply it by the price for the revenue, gives the product aswell as ask for the Sum by itself from Febuary sales where the location
+-- is 548 Lincoln St, Seattle, WA 98101 and is grouped by the product
 --6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, 
 --how many of each were sold, and what was the total revenue?
 SELECT SUM(quantity)*price as Revenue, Product, SUM(quantity) FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product
 
+-- Counts the account numbers of customers and their AVG from the amount of items they bought times the price without duplicates. Then it does a left join to combine
+-- both tables where the orderIDs are equal and with the amount of products bought by customers being more than 2.
 --7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
 SELECT distinct COUNT(cust.acctnum), AVG(quantity*price) FROM BIT_DB.FebSales Feb
 
@@ -38,6 +46,7 @@ ON Feb.orderID = cust.order_id
 WHERE Feb.Quantity>2 AND length(orderid) = 6 
 AND orderid <> 'Order ID'
 
+-- Shows the products and the sum for the amount of items bought during Feburary sales in Los Angeles while grouping them by product types.
 --8. List all the products sold in Los Angeles in February, and include how many of each were sold.
 SELECT product, sum(quantity)
 FROM BIT_DB.FebSales
