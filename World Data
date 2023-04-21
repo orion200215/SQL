@@ -1,0 +1,29 @@
+--Selects customer information from every country but the US.
+SELECT FirstName, LastName, CustomerId, Country 
+FROM chinook.customers 
+WHERE Country <> US
+
+--Selects customer info from Brazil only.
+SELECT FirstName, LastName, CustomerId, Country 
+FROM chinook.customers 
+WHERE Country = "Brazil"
+
+--Selects the name and Invoice ID, Date, and Billing Country and joins them together selecting only Brazil.
+SELECT c.FirstName, c.LastName, i.InvoiceID, i.InvoiceDate, i.BillingCountry
+FROM chinook.customers c
+LEFT JOIN chinook.invoices i
+ON c.CustomerId = i.CustomerId
+WHERE i.BillingCountry = "Brazil"
+
+--Shows employees who are a Sales Support Agent.
+SELECT EmployeeId, LastName, FirstName, Title FROM chinook.employees
+WHERE Title = "Sales Support Agent"
+
+--Shows Billing countries once.
+SELECT distinct BillingCountry from chinook.invoices
+
+-- Shows the name of employees and their Invoice  IDS by joining the customers table, employees table, and invoice table.
+SELECT emp.LastName, emp.Firstname, inv.InvoiceId
+FROM chinook.Employees emp 
+JOIN chinook.Customers cust ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv ON Inv.CustomerId = cust.CustomerId
